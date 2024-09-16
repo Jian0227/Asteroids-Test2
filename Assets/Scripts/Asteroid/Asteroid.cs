@@ -26,7 +26,7 @@ public class Asteroid : MonoBehaviour
 
     private void OnEnable()
     {
-        isReleased = false; // Reset flag when bullet is enabled
+        isReleased = false; 
         deactivateAsteroidAfterTimeCoroutine = StartCoroutine(DeactivateAsteroidAfterTime());
         _asteroidManager = FindObjectOfType<AsteroidManager>();
         _playerHealth = FindObjectOfType<PlayerHealth>();
@@ -40,7 +40,7 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isReleased) return; // If already released, do nothing
+        if (isReleased) return; 
 
         if (collision.gameObject.layer == 7)
         {
@@ -67,7 +67,7 @@ public class Asteroid : MonoBehaviour
     {
         yield return new WaitForSeconds(destroyTime);
 
-        if (!isReleased) // Only release if not already released
+        if (!isReleased) 
         {
             ReleaseAsteroid();
         }
@@ -75,10 +75,10 @@ public class Asteroid : MonoBehaviour
 
     private void ReleaseAsteroid()
     {
-        isReleased = true; // Set the flag to true to prevent multiple releases
+        isReleased = true; 
         if (deactivateAsteroidAfterTimeCoroutine != null)
         {
-            StopCoroutine(deactivateAsteroidAfterTimeCoroutine); // Stop the coroutine
+            StopCoroutine(deactivateAsteroidAfterTimeCoroutine); 
         }
         _asteroidManager.ReturnAsteroidToPool(gameObject);
     }

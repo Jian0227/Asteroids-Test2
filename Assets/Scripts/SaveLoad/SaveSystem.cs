@@ -36,11 +36,11 @@ public static class SaveSystem
         }
     }
 
-    // New method to check if the save file exists
+    
     public static bool DoesSaveFileExist()
     {
         string path = Application.persistentDataPath + "/game.fun";
-        return File.Exists(path); // Returns true if the file exists, false otherwise
+        return File.Exists(path); 
     }
 }
 

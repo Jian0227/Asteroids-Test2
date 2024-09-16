@@ -23,20 +23,6 @@ public class PowerUpManager : MonoBehaviour
     public static PowerUpManager instance;
 
 
-    //private void Awake()
-    //{
-    //    if (instance == null)
-    //    {
-    //        instance = this;
-    //        DontDestroyOnLoad(gameObject); // Keep this object alive between scenes
-    //    }
-    //    else
-    //    {
-    //        Destroy(gameObject); // Destroy duplicate instance
-    //    }
-    //}
-
-
     private void Start()
     {
         _playerShoot = FindObjectOfType<PlayerShoot>();
@@ -44,19 +30,6 @@ public class PowerUpManager : MonoBehaviour
         UpdateBullet2Amount();
         UpdateBullet3Amount();
     }
-
-    //public void ApplyLoadedData(int bullet1Level, int bullet2Level, int bullet3Level)
-    //{
-    //    currentBullet1PowerUpLevel = bullet1Level;
-    //    currentBullet2PowerUpLevel = bullet2Level;
-    //    currentBullet3PowerUpLevel = bullet3Level;
-
-    //    Debug.Log("Loaded Power-Up Levels: Bullet1: " + bullet1Level + ", Bullet2: " + bullet2Level + ", Bullet3: " + bullet3Level);
-
-    //    UpdateBullet1FireRate();
-    //    UpdateBullet2Amount();
-    //    UpdateBullet3Amount();
-    //}
 
     // Update is called once per frame
     void Update()

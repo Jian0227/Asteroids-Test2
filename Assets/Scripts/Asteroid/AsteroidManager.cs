@@ -6,11 +6,11 @@ using UnityEngine.Pool;
 public class AsteroidManager : MonoBehaviour
 {
     [Header("Asteroid Settings")]
-    public GameObject asteroidPrefab; // The asteroid prefab to spawn
-    public float spawnRate = 1.0f; // How often asteroids will spawn
-    public int minAsteroids = 1; // Minimum number of asteroids per spawn
-    public int maxAsteroids = 5; // Maximum number of asteroids per spawn
-    public float asteroidSpeed = 5f; // Speed of the asteroids
+    public GameObject asteroidPrefab; 
+    public float spawnRate = 1.0f; 
+    public int minAsteroids = 1; 
+    public int maxAsteroids = 5; 
+    public float asteroidSpeed = 5f; 
 
     public Camera mainCamera;
     private float screenLeft, screenRight, screenTop, screenBottom;
@@ -32,20 +32,20 @@ public class AsteroidManager : MonoBehaviour
     //    }
     //}
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         //mainCamera = Camera.main;
         GetScreenBounds();
 
-        // Initialize pool
+        
         _asteroidPool = new ObjectPool<GameObject>(CreateAsteroid, OnTakeFromPool, OnReturnToPool, OnDestroyAsteroid, true, 100, 200);
 
-        // Start spawning asteroids
+        
         //InvokeRepeating("SpawnAsteroids", 0f, spawnRate);
     }
 
-    // Pool-related methods
+    
     private GameObject CreateAsteroid()
     {
         GameObject asteroid = Instantiate(asteroidPrefab);
@@ -68,7 +68,7 @@ public class AsteroidManager : MonoBehaviour
         Destroy(asteroid);
     }
 
-    // Get the screen boundaries
+    
     void GetScreenBounds()
     {
         screenLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.transform.position.z)).x;
@@ -77,13 +77,13 @@ public class AsteroidManager : MonoBehaviour
         screenBottom = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.transform.position.z)).y;
     }
 
-    // Spawn asteroids randomly along the screen edges
+    
     void SpawnAsteroids()
     {
-        int asteroidCount = Random.Range(minAsteroids, maxAsteroids + 1); // Random asteroid count
+        int asteroidCount = Random.Range(minAsteroids, maxAsteroids + 1); 
         for (int i = 0; i < asteroidCount; i++)
         {
-            spawnPosition = GetRandomSpawnPosition(); // Random position on the screen edge
+            spawnPosition = GetRandomSpawnPosition(); 
             GameObject asteroid = _asteroidPool.Get();
             asteroid.transform.position = spawnPosition;
             asteroid.transform.rotation = Quaternion.identity;
@@ -93,10 +93,10 @@ public class AsteroidManager : MonoBehaviour
         }
     }
 
-    // Get a random position on one of the screen's borders
+    
     Vector2 GetRandomSpawnPosition()
     {
-        int side = Random.Range(0, 4); // 0: Left, 1: Right, 2: Top, 3: Bottom
+        int side = Random.Range(0, 4); 
         switch (side)
         {
             case 0: // Left
@@ -112,14 +112,14 @@ public class AsteroidManager : MonoBehaviour
         }
     }
 
-    // Determine the direction the asteroid will move in based on its spawn position
+    
     Vector2 GetMoveDirection(Vector2 spawnPosition)
     {
         Vector2 screenCenter = new Vector2((screenLeft + screenRight) / 2, (screenBottom + screenTop) / 2);
-        return (screenCenter - spawnPosition).normalized; // Move towards the center
+        return (screenCenter - spawnPosition).normalized; 
     }
 
-    // Return asteroid to the pool after a certain condition (for example, after a collision or out of bounds)
+    
     public void ReturnAsteroidToPool(GameObject asteroid)
     {
         _asteroidPool.Release(asteroid);

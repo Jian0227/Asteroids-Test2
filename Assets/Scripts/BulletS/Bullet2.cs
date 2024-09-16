@@ -4,29 +4,22 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class Bullet1 : MonoBehaviour
+public class Bullet2 : MonoBehaviour
 {
     [Header("General Bullet Stats")]
     [SerializeField] private LayerMask whatDestroyBullet;
     [SerializeField] private float destroyTime = 3f;
 
-    [Header("Normal Bullet Stats")]
-    [SerializeField] private float bulletVelocity = 5f;
-    public float normalBulletDamage = 1.0f;
-
-    
-
+    [Header("Bullet2 Stats")]
+    public float bullet2Velocity = 5f;
+    public float bullet2Damage = 1.0f;
 
     private Rigidbody2D rb;
-    //private float damage;
-    private ObjectPool<Bullet1> _pool;
     private Coroutine deactivateBulletAfterTimeCoroutine;
-    private bool isReleased = false;
+    private ObjectPool<Bullet2> _pool2;
+    private bool isReleased = false; 
 
 
-
-
-    // Start is called before the first frame update
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,32 +35,25 @@ public class Bullet1 : MonoBehaviour
 
         BulletVelocity();
 
-        isReleased = false;
-
+        isReleased = false; 
 
     }
 
     private void BulletVelocity()
     {
-        rb.velocity = transform.up * bulletVelocity;
+        rb.velocity = transform.up * bullet2Velocity;
     }
-
-    //private void SetDestroyTime()
-    //{
-    //    Destroy(gameObject, destroyTime);
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isReleased) return; // If already released, do nothing
-
-
         if ((whatDestroyBullet.value & (1 << collision.gameObject.layer)) > 0)
         {
+            if (isReleased) return; 
+
             IDamagable iDamagable = collision.gameObject.GetComponent<IDamagable>();
             if (iDamagable != null)
             {
-                iDamagable.Damage(normalBulletDamage);
+                iDamagable.Damage(bullet2Damage);
             }
 
             //Destroy(gameObject);
@@ -75,16 +61,16 @@ public class Bullet1 : MonoBehaviour
         }
     }
 
-    public void SetPool(ObjectPool<Bullet1> pool)
+    public void SetPool(ObjectPool<Bullet2> pool2)
     {
-        _pool = pool;
+        _pool2 = pool2;
     }
 
     private IEnumerator DeactivateBulletAfterTime()
     {
         yield return new WaitForSeconds(destroyTime);
 
-        if (!isReleased) // Only release if not already released
+        if (!isReleased) 
         {
             ReleaseBullet();
         }
@@ -92,11 +78,11 @@ public class Bullet1 : MonoBehaviour
 
     private void ReleaseBullet()
     {
-        isReleased = true; // Set the flag to true to prevent multiple releases
+        isReleased = true; 
         if (deactivateBulletAfterTimeCoroutine != null)
         {
-            StopCoroutine(deactivateBulletAfterTimeCoroutine); // Stop the coroutine
+            StopCoroutine(deactivateBulletAfterTimeCoroutine); 
         }
-        _pool.Release(this); // Release the bullet to the pool
+        _pool2.Release(this); 
     }
 }

@@ -73,10 +73,10 @@ public class PlayerShoot : MonoBehaviour
     {
         readyToShoot2 = false;
 
-        // Calculate the center angle (middle of the arc)
+        
         float middleAngle = (startAngle + endAngle) / 2f;
 
-        // Create a list of angles to ensure the order alternates between left and right
+        
         List<float> angles = new List<float>();
         angles.Add(middleAngle);
 
@@ -84,7 +84,7 @@ public class PlayerShoot : MonoBehaviour
 
         for (int i = 1; i <= bullet2Amount / 2; i++)
         {
-            // Alternate between left and right around the middle angle
+            
             float leftAngle = middleAngle - (angleStep * i);
             float rightAngle = middleAngle + (angleStep * i);
 
@@ -92,7 +92,7 @@ public class PlayerShoot : MonoBehaviour
             angles.Add(rightAngle);
         }
 
-        // Spawn the bullets according to the calculated angles
+        
         for (int i = 0; i < bullet2Amount; i++)
         {
             Bullet2 bullet2 = bulletSpawner._pool2.Get();
@@ -128,11 +128,6 @@ public class PlayerShoot : MonoBehaviour
 
         for (int i = 0; i < bullet3Amount; i++)
         {
-            //float bulDirX = transform.position.x + Mathf.Sin((angle * Mathf.PI) / 180f);
-            //float bulDirY = transform.position.y + Mathf.Sin((angle * Mathf.PI) / 180f);
-
-            //Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
-            //Vector2 bulDir = (bulMoveVector - transform.position).normalized;
 
             Bullet3 bullet3 = bulletSpawner._pool3.Get();
 
