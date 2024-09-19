@@ -18,6 +18,8 @@ public class Asteroid : MonoBehaviour
     private bool isReleased = false; 
     private AsteroidManager _asteroidManager;
     private PlayerHealth _playerHealth;
+    private ObjectPool<GameObject> _asteroidPool;
+
 
     private void Awake()
     {
@@ -58,10 +60,10 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    //public void SetPool(ObjectPool<Bullet3> pool3)
-    //{
-    //    _pool3 = pool3;
-    //}
+    public void SetPool(ObjectPool<GameObject> asteroidPool)
+    {
+        _asteroidPool = asteroidPool;
+    }
 
     private IEnumerator DeactivateAsteroidAfterTime()
     {
